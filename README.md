@@ -1,51 +1,57 @@
-# Netzwerk-Scanner
 
-Dieses Python-Projekt scannt ein lokales Netzwerk und ermittelt die IP- und MAC-Adressen der verbundenen Geräte. Zusätzlich wird für jede MAC-Adresse der Hersteller (Vendor) mithilfe der `macvendors.com` API abgerufen.
+# Network Scanner
 
-## Funktionen
+This Python project scans a local network and retrieves the IP and MAC addresses of connected devices. Additionally, for each MAC address, the manufacturer (vendor) is fetched using the `macvendors.com` API.
 
-- **Netzwerkscan:** Sucht nach Geräten im angegebenen Subnetz und sammelt IP- und MAC-Adressen.
-- **Vendor-Erkennung:** Ruft den Hersteller (Vendor) der Geräte anhand ihrer MAC-Adresse ab.
-- **Übersichtliche Darstellung:** Zeigt die gefundenen Geräte in einer übersichtlichen Tabelle an.
+## Features
+
+- **Network Scan:** Searches for devices in the specified subnet and collects their IP and MAC addresses.
+- **Vendor Lookup:** Fetches the manufacturer (vendor) of devices based on their MAC address.
+- **Clear Display:** Shows the found devices in a well-organized table.
 
 ## Installation
 
-1. **Voraussetzungen:**
+1. **Requirements:**
    - Python 3.x
-   - `scapy` Bibliothek
-   - `requests` Bibliothek
-   - `prettytable` Bibliothek
+   - `scapy` library
+   - `requests` library
+   - `prettytable` library
 
-2. **Installation der benötigten Pakete:**
+2. **Install required packages:**
 
    ```bash
    pip install scapy requests prettytable
    ```
-3. **Installation von Npcap** (für Windows-Nutzer):
 
-Scapy erfordert Npcap, um Netzwerkschnittstellen zu überwachen. Lade Npcap von der offiziellen Website herunter und installiere es.
+3. **Install Npcap** (for Windows users):
 
-## Verwendung
-1. Ändere die Ziel-IP/Subnetz in der Datei main.py, um dein Netzwerk anzugeben (z.B. 192.168.1.1/24).
+   Scapy requires Npcap to monitor network interfaces. Download and install Npcap from the [official website](https://nmap.org/npcap/).
 
-1. Führe das Skript mit Administratorrechten aus:
+## Usage
 
-```bash
-python main.py
-```
-3. Die gescannten Geräte und deren Informationen werden in einer Tabelle ausgegeben.
+1. Change the target IP/subnet in the `main.py` file to match your network (e.g., `192.168.1.1/24`).
 
-## Beispiel
+2. Run the script with administrator privileges:
+
+   ```bash
+   python main.py
+   ```
+
+3. The scanned devices and their information will be displayed in a table.
+
+## Example
+
 ```plaintext
 +---------------+-------------------+----------------------+
-| IP-Adresse    | MAC-Adresse       | Hersteller           |
+| IP Address    | MAC Address       | Vendor               |
 +---------------+-------------------+----------------------+
 | 192.168.1.2   | 00:1A:2B:3C:4D:5E | Apple, Inc.          |
 | 192.168.1.3   | 00:1B:44:11:3A:B7 | Samsung Electronics  |
 +---------------+-------------------+----------------------+
 ```
-## Hinweis
-Dieses Skript funktioniert nur korrekt, wenn es mit Administratorrechten ausgeführt wird, da es auf Netzwerkschnittstellen zugreifen muss.
+
+## Note
+This script only works correctly if run with administrator privileges, as it needs access to network interfaces.
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
