@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.12 (networkScanner)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (networkScanner)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (Network-Scanner)" project-jdk-type="Python SDK" />
 </project>

@@ -2,41 +2,51 @@ import requests
 from scapy.layers.l2 import ARP, Ether
 from scapy.sendrecv import srp
 import prettytable as pt
+import socket
 
 def network_scan(target_ip):
-    # Erstelle ARP Anfrage
+    # Create ARP request
     arp = ARP(pdst=target_ip)
-    ether = Ether(dst="ff:ff:ff:ff:ff:ff")  # Broadcast an alle Geräte
+    ether = Ether(dst="ff:ff:ff:ff:ff:ff")  # Broadcast to all devices
     packet = ether / arp
 
-    # Sende das Paket und warte auf Antworten
+    # Send the packet and wait for responses
     result = srp(packet, timeout=2, verbose=False)[0]
 
-    # Erstelle eine Tabelle für eine übersichtliche Darstellung
-    table = pt.PrettyTable(["IP-Adresse", "MAC-Adresse", "Hersteller"])
+    # Create a table for clear representation
+    table = pt.PrettyTable(["IP Address", "MAC Address", "Manufacturer", "Device Name"])
 
-    # Verarbeite die Antworten
+    # Process the responses
     for sent, received in result:
         mac_address = received.hwsrc
-        vendor = get_vendor(mac_address)  # Hersteller über die MAC-Adresse abrufen
-        table.add_row([received.psrc, mac_address, vendor])
+        vendor = get_vendor(mac_address)  # Retrieve manufacturer by MAC address
+        device_name = get_device_name(received.psrc)  # Get the device name via reverse DNS
+        table.add_row([received.psrc, mac_address, vendor, device_name])
 
     print(table)
 
 def get_vendor(mac_address):
-    # Verwende die API von macvendors.co, um den Hersteller zu ermitteln
+    # Use the macvendors.co API to determine the manufacturer
     try:
         url = f"https://api.macvendors.com/{mac_address}"
         response = requests.get(url, timeout=5)
         if response.status_code == 200:
             return response.text.strip()
         else:
-            return "Unbekannter Hersteller"
+            return "Unknown Manufacturer"
     except requests.RequestException:
-        return "API-Anfrage fehlgeschlagen"
+        return "API Request Failed"
+
+def get_device_name(ip_address):
+    # Attempt to resolve the hostname from the IP address
+    try:
+        hostname, _, _ = socket.gethostbyaddr(ip_address)
+        return hostname
+    except socket.herror:
+        return "Unknown Device"
 
 if __name__ == "__main__":
-    # Netzwerksubnetz angeben (zum Beispiel 192.168.178.1/24 für ein typisches Heimnetzwerk)
+    # Specify the network subnet (e.g., 192.168.178.1/24 for a typical home network)
     target_ip = "192.168.178.1/24"
-    print(f"Scanning Netzwerk: {target_ip}")
+    print(f"Scanning network: {target_ip}")
     network_scan(target_ip)
