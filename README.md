@@ -46,3 +46,9 @@ python main.py
 ```
 ## Hinweis
 Dieses Skript funktioniert nur korrekt, wenn es mit Administratorrechten ausgeführt wird, da es auf Netzwerkschnittstellen zugreifen muss.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Contact
+Email: prangenbergdean@gmail.com
